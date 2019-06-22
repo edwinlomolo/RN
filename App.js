@@ -7,70 +7,53 @@
  */
 
 import React, { Component } from 'react';
-import { View, ScrollView, StyleSheet, Text, Button } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+} from 'react-native';
 
-let id = 0;
-
-const Todo = props => (
-  <View>
-    <Text>{props.todo.text}</Text>
-    <Button onPress={props.onDelete} title="delete" />
-  </View>
-)
-
-export default class App extends Component {
+class Counter extends Component {
   constructor() {
     super();
     this.state = {
-      todos: [],
+      count: 0,
     }
   }
 
-  addTodo() {
-    id++;
-    const text = `TODO number ${id}`;
-    this.setState({
-      todos: [ ...this.state.todos,
-        { id: id, text: text, checked: false },
-      ]
-    })
+  componentDidMount() {
+    this.interval = setInterval(this.inc, 1000);
   }
 
-  removeTodo(id) {
-    this.setState({
-      todos: this.state.todos.filter(todo => todo.id !== id),
-    })
+  componentWillUnmount() {
+    clearInterval(this.interval);
   }
 
-  toggleTodo(id) {
-    this.setState({
-      todos: this.state.todos.map(todo => {
-        if (todo.id !== id) return todo;
-        return {
-          id: todo.id,
-          text: todo.text,
-          checked: !todo.checked
-        };
-      }),
-    });
+  inc = () => {
+    this.setState(prevState => ({
+      count: prevState.count + 1
+    }));
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.count}>{this.state.count}</Text>
+      </View>
+    )
+  }
+}
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showCounter: true,
+    }
   }
   render() {
     return (
-      <View>
-        <Text>Todo count: {this.state.todos.length}</Text>
-        <Text>Unchecked todos: {this.state.todos.filter(
-          todo => !todo.checked).length}</Text>
-        <Button onPress={() => this.addTodo()} title="Add Todo" />
-        <ScrollView>
-          {this.state.todos.map(todo => (
-            <Todo
-              toggleChange={() => this.toggleTodo(todo.id)}
-              onDelete={() => this.removeTodo(todo.id)}
-              todo={todo}
-            />
-          ))}
-        </ScrollView>
-      </View>
+      this.state.showCounter && <Counter />
     )
   }
 }
@@ -80,6 +63,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ecf0f1"
+    backgroundColor: "#ecf0f1",
+  },
+  count: {
+    fontSize: 48
   }
 });
