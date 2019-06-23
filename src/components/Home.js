@@ -5,7 +5,7 @@ export default class Home extends Component {
   render() {
     return(
       <View style={styles.container}>
-        <Text>Home container!</Text>
+        <Text>Home Screen</Text>
       </View>
     );
   }

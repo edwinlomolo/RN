@@ -13,7 +13,7 @@ export default class SignUp extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Sign Up!</Text>
+        <Text>Sign Up Screen</Text>
         <Button
           title="Sign In"
           onPress={this._showSignIn}

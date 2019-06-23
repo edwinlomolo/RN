@@ -5,7 +5,7 @@ export default class Settings extends Component {
   reder() {
     return (
       <View style={styles.container}>
-        <Text>Settings!</Text>
+        <Text>Settings Screen</Text>
       </View>
     );
   }
