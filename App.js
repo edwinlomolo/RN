@@ -9,51 +9,47 @@
 import React, { Component } from 'react';
 import {
   View,
+  ScrollView,
+  FlatList,
   StyleSheet,
-  Text,
+  Button,
+  Text
 } from 'react-native';
 
-class Counter extends Component {
-  constructor() {
-    super();
-    this.state = {
-      count: 0,
-    }
+import contacts, { compareNames } from "./src/contacts";
+import Row from "./src/components/Row";
+
+export default class App extends Component {
+  state = {
+    showContacts: false,
+    contacts: contacts
   }
 
-  componentDidMount() {
-    this.interval = setInterval(this.inc, 1000);
-  }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
+  renderItem = ({ item }) => <Row { ...item } />
 
-  inc = () => {
+  toggleContacts = () => this.setState(prevState => ({
+    showContacts: !prevState.showContacts,
+  }));
+
+  sort = () => {
     this.setState(prevState => ({
-      count: prevState.count + 1
+      contacts: prevState.contacts.sort(compareNames)
     }));
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.count}>{this.state.count}</Text>
+        <Button title="toggle contacts" onPress={this.toggleContacts} />
+        <Button title="sort contacts" onPress={this.sort} />
+        {this.state.showContacts && (
+          <FlatList
+            data={this.state.contacts}
+            renderItem={this.renderItem}
+          />
+        )}
       </View>
-    )
-  }
-}
-
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showCounter: true,
-    }
-  }
-  render() {
-    return (
-      this.state.showCounter && <Counter />
     )
   }
 }
@@ -61,8 +57,8 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
     backgroundColor: "#ecf0f1",
   },
   count: {
