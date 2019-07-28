@@ -17,20 +17,23 @@ import {
 } from "react-native";
 
 import contacts, { compareNames } from "./src/contacts";
-import Row from "./src/components/Row";
 import ContactList from "./src/components/ContactList";
-
+import AddContactForm from "./src/components/AddContactForm";
 export default class App extends Component {
   state = {
     showContacts: false,
-    contacts: contacts
+    contacts: contacts,
+    showForm: false
   };
-
-  renderItem = obj => <Row {...obj.item} />;
 
   toggleContacts = () =>
     this.setState(prevState => ({
       showContacts: !prevState.showContacts
+    }));
+
+  toggleForm = () =>
+    this.setState(prevState => ({
+      showForm: !prevState.showForm
     }));
 
   sort = () => {
@@ -39,19 +42,15 @@ export default class App extends Component {
     }));
   };
 
-  renderSectionHeader = obj => <Text>{obj.section.title}</Text>;
-
   render() {
+    if (this.state.showForm) return <AddContactForm />;
     return (
       <View style={styles.container}>
         <Button title="toggle contacts" onPress={this.toggleContacts} />
         <Button title="sort" onPress={this.sort} />
+        <Button title="Add Contact" onPress={this.toggleForm} />
         {this.state.showContacts && (
-          <ContactList
-            renderItem={this.renderItem}
-            renderSectionHeader={this.renderSectionHeader}
-            contacts={this.state.contacts}
-          />
+          <ContactList contacts={this.state.contacts} />
         )}
       </View>
     );
