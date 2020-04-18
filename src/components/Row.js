@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import PropTypes from "prop-types"
 
 export default Row = props => (
   <View style={styles.row}>
@@ -13,3 +14,8 @@ const styles = StyleSheet.create({
     padding: 20,
   }
 });
+
+Row.propTypes = {
+  name: PropTypes.string,
+  phone: PropTypes.string,
+}

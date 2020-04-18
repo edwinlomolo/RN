@@ -26,6 +26,10 @@ export default class App extends Component {
     showForm: false
   };
 
+  addContact = newContact => {
+    this.setState(prevState => ({ showForm: false, contacts: [...prevState.contacts, newContact] }))
+  }
+
   toggleContacts = () =>
     this.setState(prevState => ({
       showContacts: !prevState.showContacts
@@ -43,7 +47,7 @@ export default class App extends Component {
   };
 
   render() {
-    if (this.state.showForm) return <AddContactForm />;
+    if (this.state.showForm) return <AddContactForm onSubmit={this.addContact} />;
     return (
       <View style={styles.container}>
         <Button title="toggle contacts" onPress={this.toggleContacts} />
@@ -62,7 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // alignItems: "center",
     // justifyContent: "center",
-    backgroundColor: "#ecf0f1"
+    backgroundColor: "#f3f3f3"
   },
   count: {
     fontSize: 48
