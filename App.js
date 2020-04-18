@@ -28,6 +28,8 @@ import ContactDetailScreen from "./screens/ContactDetailScreen"
 import LoginScreen from "./screens/LoginScreen"
 import SettingsScreen from "./src/components/Settings"
 
+import { fetchUsers } from "./api"
+
 const ContactTab = createStackNavigator({
   AddContact: AddContactScreen,
   ContactList: ContactListScreen,
@@ -60,9 +62,18 @@ const AppNavigator = createSwitchNavigator({
 export default class App extends Component {
   state = {
     // showContacts: false,
-    contacts: contacts,
+    contacts: null,
     // showForm: false
   };
+
+  componentDidMount() {
+    this.getUsers()
+  }
+
+  getUsers = async () => {
+    const result = await fetchUsers()
+    this.setState({ contacts: result })
+  }
 
   addContact = newContact => {
     this.setState(prevState => ({ contacts: [...prevState.contacts, newContact] }))
