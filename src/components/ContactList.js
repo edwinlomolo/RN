@@ -4,8 +4,6 @@ import PropTypes from "prop-types";
 
 import Row from "./Row";
 
-const renderItem = obj => <Row {...obj.item} />;
-
 const renderSectionHeader = obj => <Text>{obj.section.title}</Text>;
 
 const ContactList = props => {
@@ -16,6 +14,8 @@ const ContactList = props => {
       [firstLetter]: [...(obj[firstLetter] || []), contact]
     };
   }, {});
+
+  const renderItem = obj => <Row {...obj.item} onSelectContact={props.onSelectContact} />
 
   const sections = Object.keys(contactsByLetter)
     .sort()

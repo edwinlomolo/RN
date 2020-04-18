@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from "react-native";
 
-export default class Settings extends Component {
-  reder() {
+export default class SettingsScreen extends Component {
+  static navigationOptions = {}
+  render() {
     return (
       <View style={styles.container}>
-        <Text>Settings Screen</Text>
+        <Text style={styles.text}>Settings Screen</Text>
       </View>
     );
   }
@@ -13,8 +14,10 @@ export default class Settings extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: "center",
     justifyContent: "center",
-  }
+    flex: 1,
+  },
+  text: {
+    textAlign: "center",
+  },
 });
