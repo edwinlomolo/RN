@@ -11,7 +11,9 @@ import {
 import contacts, { compareNames } from "../src/contacts.js";
 import ContactList from "../src/components/ContactList";
 import AddContactForm from "../src/components/AddContactForm";
-export default class App extends Component {
+import { connect } from "react-redux"
+
+class App extends Component {
 	static navigationOptions = ({ navigation }) => {
 		return {
       headerTitle: "Contacts",
@@ -33,7 +35,7 @@ export default class App extends Component {
     return (
       <View style={styles.container}>
         <ContactList
-        contacts={this.props.screenProps.contacts}
+        contacts={this.props.contacts}
         onSelectContact={(contact) => {
           this.props.navigation.navigate("ContactDetail", {
             phone: contact.phone,
@@ -54,3 +56,9 @@ const styles = StyleSheet.create({
     fontSize: 48
   }
 });
+
+const mapStateToProps = state => ({
+  contacts: state.contacts,
+})
+
+export default connect(mapStateToProps)(App)

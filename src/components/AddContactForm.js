@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Constants from "expo-constants"
+import Constants from "expo-constants";
 import { TextInput, KeyboardAvoidingView, View, Button, StyleSheet } from "react-native";
 
 export default class AddContactForm extends React.Component {

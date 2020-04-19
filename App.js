@@ -27,8 +27,10 @@ import ContactListScreen from "./screens/ContactListScreen"
 import ContactDetailScreen from "./screens/ContactDetailScreen"
 import LoginScreen from "./screens/LoginScreen"
 import SettingsScreen from "./src/components/Settings"
+import { Provider } from "react-redux"
+import { store } from "./redux/store"
 
-import { fetchUsers } from "./api"
+// import { fetchUsers } from "./api"
 
 const ContactTab = createStackNavigator({
   AddContact: AddContactScreen,
@@ -62,18 +64,18 @@ const AppNavigator = createSwitchNavigator({
 export default class App extends Component {
   state = {
     // showContacts: false,
-    contacts: null,
+    contacts: contacts,
     // showForm: false
   };
 
-  componentDidMount() {
-    this.getUsers()
-  }
+  // componentDidMount() {
+  //   this.getUsers()
+  // }
 
-  getUsers = async () => {
-    const result = await fetchUsers()
-    this.setState({ contacts: result })
-  }
+  // getUsers = async () => {
+  //   const result = await fetchUsers()
+  //   this.setState({ contacts: result })
+  // }
 
   addContact = newContact => {
     this.setState(prevState => ({ contacts: [...prevState.contacts, newContact] }))
@@ -97,7 +99,7 @@ export default class App extends Component {
 
   render() {
     // if (this.state.showForm) return <AddContactForm onSubmit={this.addContact} />;
-    return <AppNavigator screenProps={{ contacts: this.state.contacts, addContact: this.addContact }}/>;
+    return <Provider store={store}><AppNavigator /></Provider>
   }
 }
 
